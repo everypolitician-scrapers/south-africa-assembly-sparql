@@ -44,7 +44,7 @@ data = sparql(memberships_query).map(&:to_h).map do |r|
     constituency_id: wikidata_id(r[:constituency]),
     party:           r[:partylabel],
     party_id:        wikidata_id(r[:party]),
-    term:            r[:termOrdinal],
+    term:            r[:termordinal],
   }
 end
 
