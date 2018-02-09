@@ -28,8 +28,10 @@ SELECT DISTINCT ?item ?itemLabel ?start_date ?end_date ?constituency ?constituen
   OPTIONAL { ?statement pq:P582 ?end_date. }
   OPTIONAL { ?statement pq:P768 ?constituency. }
   OPTIONAL { ?statement pq:P4100 ?party. }
-  OPTIONAL { ?statement pq:P2937 ?term . }
-  OPTIONAL { ?term p:P31/pq:P1545 ?termOrdinal . }
+  OPTIONAL {
+    ?statement pq:P2937 ?term .
+    OPTIONAL { ?term p:P31/pq:P1545 ?termOrdinal . }
+  }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
 EOQ
