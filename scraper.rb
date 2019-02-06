@@ -21,7 +21,7 @@ def wikidata_id(url)
 end
 
 memberships_query = <<EOQ
-SELECT DISTINCT ?item ?itemLabel ?start_date ?end_date ?constituency ?constituencyLabel ?party ?partyLabel ?term ?termLabel ?termOrdinal ?paName WHERE {
+SELECT DISTINCT ?statement ?item ?itemLabel ?start_date ?end_date ?constituency ?constituencyLabel ?party ?partyLabel ?term ?termLabel ?termOrdinal ?paName WHERE {
   ?item p:P39 ?statement.
   ?statement ps:P39 wd:Q16744266; pq:P2937 wd:Q18109299 .
   OPTIONAL { ?statement pq:P580 ?start_date. }
@@ -44,6 +44,7 @@ EOQ
 
 data = sparql(memberships_query).map(&:to_h).map do |r|
   {
+    statement:       wikidata_id(r[:statement]),
     id:              wikidata_id(r[:item]),
     name:            r[:paname].to_s.empty? ? r[:itemlabel] : r[:paname],
     start_date:      r[:start_date].to_s[0..9],
@@ -57,4 +58,4 @@ data = sparql(memberships_query).map(&:to_h).map do |r|
 end
 
 ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
-ScraperWiki.save_sqlite(%i[id], data)
+ScraperWiki.save_sqlite(%i[statement], data)
