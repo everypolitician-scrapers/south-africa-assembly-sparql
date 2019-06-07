@@ -23,7 +23,8 @@ end
 memberships_query = <<EOQ
 SELECT DISTINCT ?statement ?item ?itemLabel ?start_date ?end_date ?constituency ?constituencyLabel ?party ?partyLabel ?term ?termLabel ?termOrdinal ?paName WHERE {
   ?item p:P39 ?statement.
-  ?statement ps:P39 wd:Q16744266; pq:P2937 wd:Q18109299 .
+  VALUES ?terms { wd:Q18109299 wd:Q64022207 }
+  ?statement ps:P39 wd:Q16744266; pq:P2937 ?terms .
   OPTIONAL { ?statement pq:P580 ?start_date. }
   OPTIONAL { ?statement pq:P582 ?end_date. }
   OPTIONAL { ?statement pq:P768 ?constituency. }
